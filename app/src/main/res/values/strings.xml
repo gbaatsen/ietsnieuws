@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">IetsNieuws</string>
+    <string name="retry">Retry</string>
+    <string name="load_error">An error occurred while loading the news</string>
+</resources>
