@@ -1,7 +1,7 @@
 package com.baatsen.ietsnieuws.presentation.news
 
 import android.arch.lifecycle.MutableLiveData
-import com.baatsen.ietsnieuws.base.BaseViewModel
+import android.arch.lifecycle.ViewModel
 import com.baatsen.ietsnieuws.domain.interactor.GetNewsInteractor
 import com.baatsen.ietsnieuws.domain.model.Article
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,11 +9,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ArticleListViewModel : BaseViewModel(), ArticleAdapter.ClickListener {
-
-    @Inject
-    lateinit var getNewsInteractor: GetNewsInteractor
-
+class ArticleListViewModel @Inject constructor(private val getNewsInteractor: GetNewsInteractor) : ViewModel(),
+    ArticleAdapter.ClickListener {
     val isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val urlToOpen = MutableLiveData<String>()
     val isInErrorState: MutableLiveData<Boolean> = MutableLiveData()
@@ -38,13 +35,13 @@ class ArticleListViewModel : BaseViewModel(), ArticleAdapter.ClickListener {
 
     fun loadArticles() {
         subscription = getNewsInteractor.execute()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { onStartGetNews() }
-                .subscribe(
-                        { result -> onNewsReceived(result) },
-                        { onError() }
-                )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onStartGetNews() }
+            .subscribe(
+                { result -> onNewsReceived(result) },
+                { onError() }
+            )
     }
 
     private fun onStartGetNews() {
