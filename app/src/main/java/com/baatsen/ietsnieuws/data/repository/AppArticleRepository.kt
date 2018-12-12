@@ -11,8 +11,8 @@ import javax.inject.Inject
 class AppArticleRepository @Inject
 constructor(private val newsService: NewsService, private val newsMapper: NewsMapper) : ArticleRepository {
 
-    override fun getNews(): Single<List<Article>> {
-        return newsService.getNews(KEY)
+    override fun getNews(source: String): Single<List<Article>> {
+        return newsService.getNews(KEY, source)
             .map { newsMapper.transform(it) }
             .singleOrError()
     }

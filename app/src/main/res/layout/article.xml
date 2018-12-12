@@ -22,7 +22,6 @@
                 android:contentDescription="@null"
                 app:imageUrl="@{article.urlToImage}"/>
 
-
         <TextView
                 android:id="@+id/title"
                 style="@style/Header"

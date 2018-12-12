@@ -17,6 +17,8 @@
 package com.baatsen.ietsnieuws.di
 
 import com.baatsen.ietsnieuws.presentation.news.ArticleListFragment
+import com.baatsen.ietsnieuws.presentation.settings.SettingsFragment
+import com.baatsen.ietsnieuws.presentation.settings.selectsource.SelectSourceFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -26,4 +28,10 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeArticleListFragment(): ArticleListFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSettingsFragment(): SettingsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSelectSourceFragment(): SelectSourceFragment
 }

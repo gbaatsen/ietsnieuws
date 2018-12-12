@@ -34,12 +34,12 @@ class ArticleAdapter(private val clickListener: ClickListener) : RecyclerView.Ad
     inner class ViewHolder(private val binding: ArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             binding.article = article
-            binding.root.setOnClickListener { clickListener.onArticleClick(article.urlToArticle) }
+            binding.root.setOnClickListener { clickListener.onClick(article.urlToArticle) }
             binding.executePendingBindings()
         }
     }
 
     interface ClickListener {
-        fun onArticleClick(url: String?)
+        fun onClick(url: String?)
     }
 }

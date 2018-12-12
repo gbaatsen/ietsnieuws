@@ -19,6 +19,8 @@ package com.baatsen.ietsnieuws.di
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.baatsen.ietsnieuws.presentation.news.ArticleListViewModel
+import com.baatsen.ietsnieuws.presentation.settings.SettingsViewModel
+import com.baatsen.ietsnieuws.presentation.settings.selectsource.SelectSourceViewModel
 import com.baatsen.ietsnieuws.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -30,7 +32,17 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ArticleListViewModel::class)
-    abstract fun bindUserViewModel(userViewModel: ArticleListViewModel): ViewModel
+    abstract fun bindArticleListViewModel(viewModel: ArticleListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    abstract fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SelectSourceViewModel::class)
+    abstract fun bindSelectSourceViewModel(viewModel: SelectSourceViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

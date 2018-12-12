@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">IetsNieuws</string>
-    <string name="retry">Retry</string>
-    <string name="load_error">An error occurred while loading the news</string>
+    <string name="app_name">Iets nieuws</string>
+    <string name="retry">Probeer opnieuw</string>
+    <string name="load_error">Er is een fout opgetreden bij het ophalen van het nieuws</string>
+    <string name="settings">Instellingen</string>
+    <string name="news_items">Nieuwsberichten</string>
+    <string name="change_source">Andere nieuwsbron</string>
+    <string name="change_source_subtitle">Selecteer een andere nieuwsbron</string>
+    <string name="select_source">Kies nieuwsbron</string>
 </resources>

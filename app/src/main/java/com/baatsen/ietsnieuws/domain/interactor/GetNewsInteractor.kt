@@ -1,13 +1,13 @@
 package com.baatsen.ietsnieuws.domain.interactor
 
-import com.baatsen.ietsnieuws.domain.model.Article
 import com.baatsen.ietsnieuws.data.repository.AppArticleRepository
+import com.baatsen.ietsnieuws.domain.model.Article
 import io.reactivex.Single
 import javax.inject.Inject
 
-class GetNewsInteractor @Inject constructor(private val articleRepository: AppArticleRepository) {
+class GetNewsInteractor @Inject constructor(private val repository: AppArticleRepository) {
 
-    fun execute(): Single<List<Article>> {
-        return articleRepository.getNews()
+    fun execute(source: String): Single<List<Article>> {
+        return repository.getNews(source)
     }
 }

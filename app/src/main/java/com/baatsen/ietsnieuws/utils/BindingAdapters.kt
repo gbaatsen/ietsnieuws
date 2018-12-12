@@ -16,6 +16,12 @@ fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
     view.adapter = adapter
 }
 
+@BindingAdapter("flag")
+fun setFlag(view: ImageView, flag: Int) {
+    view.setImageResource(flag)
+}
+
+
 @BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, url: String) {
     Glide.with(view.context).load(url).into(view)

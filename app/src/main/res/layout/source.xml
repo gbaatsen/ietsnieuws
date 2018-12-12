@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="source"
+                type="com.baatsen.ietsnieuws.domain.model.Source"/>
+
+        <import type="android.text.TextUtils"/>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="16dp">
+
+        <ImageView
+                android:id="@+id/flag"
+                android:layout_width="36dp"
+                android:layout_height="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@null"
+                app:flag="@{source.flag}"/>
+
+        <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/description"
+                android:text="@{source.name}"
+                app:layout_constraintStart_toEndOf="@id/flag"
+                android:layout_marginStart="@dimen/spacing_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Dit is de naam"/>
+
+        <TextView
+                android:id="@id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{source.description}"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:isVisible="@{!TextUtils.isEmpty(description.text)}"
+                app:layout_constraintStart_toStartOf="@id/name"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:text="Dit is de description"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
