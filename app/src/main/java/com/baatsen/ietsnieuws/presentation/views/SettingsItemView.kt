@@ -1,6 +1,7 @@
 package com.baatsen.ietsnieuws.presentation.views
 
 import android.content.Context
+import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
@@ -45,5 +46,9 @@ class SettingsItemView : ConstraintLayout {
 
     fun setSubTitle(charSequence: CharSequence?) {
         binding.settingsItemSubTitle.text = charSequence
+    }
+
+    fun setIcon(@DrawableRes resId: Int) {
+        binding.icon.setImageResource(resId)
     }
 }

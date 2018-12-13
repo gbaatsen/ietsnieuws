@@ -42,6 +42,7 @@ class SettingsView : ScrollView {
         return SettingsItemView(context).apply {
             setTitle(setting.title)
             setSubTitle(setting.subTitle)
+            setIcon(setting.icon)
         }
     }
 

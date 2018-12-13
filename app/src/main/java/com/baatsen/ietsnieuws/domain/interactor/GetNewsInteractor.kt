@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetNewsInteractor @Inject constructor(private val repository: AppArticleRepository) {
 
-    fun execute(source: String): Single<List<Article>> {
-        return repository.getNews(source)
+    fun execute(): Single<List<Article>> {
+        return repository.getNews()
     }
 }

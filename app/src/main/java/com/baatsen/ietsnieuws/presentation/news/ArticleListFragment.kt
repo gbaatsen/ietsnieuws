@@ -1,8 +1,10 @@
 package com.baatsen.ietsnieuws.presentation.news
 
+import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -70,6 +72,20 @@ class ArticleListFragment : Fragment(), Injectable {
     }
 
     private fun gotoSettings() {
-        startActivity(intentFor<SettingsActivity>())
+        startActivityForResult(intentFor<SettingsActivity>(), REFRESH_ON_RETURN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REFRESH_ON_RETURN && resultCode == RESULT_OK) {
+            viewModel.refresh()
+        }
+
+    }
+
+    companion object {
+        const val REFRESH_ON_RETURN = 1
     }
 }
+
+

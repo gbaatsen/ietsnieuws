@@ -1,5 +1,7 @@
 package com.baatsen.ietsnieuws.presentation.settings.selectsource
 
+import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -26,6 +28,7 @@ class SelectSourceFragment : Fragment(), Injectable {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SelectSourceViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_source, container, false)
         binding.viewModel = viewModel
+        viewModel.sourceSelected.observe(this, Observer { closeSettings() })
         binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.setLifecycleOwner(this)
         (activity as AppCompatActivity).let {
@@ -33,9 +36,18 @@ class SelectSourceFragment : Fragment(), Injectable {
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true);
         }
         binding.toolbar.toolbar.let {
-            it.setNavigationOnClickListener { _ -> activity?.onBackPressed() }
+            it.setNavigationOnClickListener { _ -> goBack() }
             it.setSubtitle(R.string.select_source)
         }
         return binding.root
+    }
+
+    private fun goBack() {
+        requireFragmentManager().popBackStackImmediate()
+    }
+
+    private fun closeSettings() {
+        activity?.setResult(Activity.RESULT_OK)
+        activity?.finish()
     }
 }

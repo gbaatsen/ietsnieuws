@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.baatsen.ietsnieuws.R
-import com.baatsen.ietsnieuws.databinding.SourceBinding
+import com.baatsen.ietsnieuws.databinding.SourceItemBinding
 import com.baatsen.ietsnieuws.domain.model.Source
 
 
@@ -13,8 +13,8 @@ class SourceAdapter(private val clickListener: ClickListener) : RecyclerView.Ada
     private lateinit var sourceList: List<Source>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: SourceBinding =
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.source, parent, false)
+        val binding: SourceItemBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.source_item, parent, false)
         return ViewHolder(binding)
     }
 
@@ -31,7 +31,7 @@ class SourceAdapter(private val clickListener: ClickListener) : RecyclerView.Ada
         this.sourceList = sourceList
     }
 
-    inner class ViewHolder(private val binding: SourceBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: SourceItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(source: Source) {
             binding.source = source
             binding.root.setOnClickListener { clickListener.onClick(source.id) }

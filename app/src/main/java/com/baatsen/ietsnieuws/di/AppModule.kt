@@ -2,6 +2,7 @@ package com.baatsen.ietsnieuws.di
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Resources
 import com.baatsen.ietsnieuws.IetsNieuwsApp
 import com.baatsen.ietsnieuws.data.service.NewsService
@@ -11,6 +12,7 @@ import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.jetbrains.anko.defaultSharedPreferences
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -53,7 +55,15 @@ class AppModule {
             .create(NewsService::class.java)
     }
 
+    @Named(SHARED_PREFERENCES)
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(@Named(AppModule.NAMED_APPLICATION_CONTEXT) context: Context): SharedPreferences {
+        return context.defaultSharedPreferences
+    }
+
     companion object {
         const val NAMED_APPLICATION_CONTEXT = "applicationContext"
+        const val SHARED_PREFERENCES = "sharedpreferences"
     }
 }

@@ -45,10 +45,14 @@ class SettingsFragment : Fragment(), Injectable {
 
     private fun settingsClick(setting: Setting?) {
         when (setting?.action) {
-            SettingActions.CHANGE_SOURCE -> requireFragmentManager().beginTransaction().replace(
+            SettingActions.CHANGE_SOURCE -> requireFragmentManager()
+                .beginTransaction()
+                .replace(
                 R.id.container,
                 SelectSourceFragment()
-            ).commit()
+            )
+                .addToBackStack(null)
+                .commit()
         }
     }
 }

@@ -23,6 +23,8 @@ fun setFlag(view: ImageView, flag: Int) {
 
 
 @BindingAdapter("imageUrl")
-fun loadImage(view: ImageView, url: String) {
-    Glide.with(view.context).load(url).into(view)
+fun loadImage(view: ImageView, url: String?) {
+    url?.let {
+        Glide.with(view.context).load(url).into(view)
+    }
 }
