@@ -8,9 +8,9 @@ import com.baatsen.ietsnieuws.R
 import com.baatsen.ietsnieuws.databinding.ArticleBinding
 import com.baatsen.ietsnieuws.domain.model.Article
 
-
-class ArticleAdapter(private val clickListener: ClickListener) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
     private lateinit var articleList: List<Article>
+    lateinit var clickListener: ClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ArticleBinding =

@@ -6,7 +6,10 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import com.baatsen.ietsnieuws.IetsNieuwsApp
 import com.baatsen.ietsnieuws.data.service.NewsService
+import com.baatsen.ietsnieuws.presentation.news.ArticleAdapter
+import com.baatsen.ietsnieuws.utils.AndroidSchedulerProvider
 import com.baatsen.ietsnieuws.utils.BASE_URL
+import com.baatsen.ietsnieuws.utils.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -60,6 +63,18 @@ class AppModule {
     @Provides
     fun provideSharedPreferences(@Named(AppModule.NAMED_APPLICATION_CONTEXT) context: Context): SharedPreferences {
         return context.defaultSharedPreferences
+    }
+
+    @Singleton
+    @Provides
+    fun provideSchedulerProvider(): SchedulerProvider {
+        return AndroidSchedulerProvider
+    }
+
+    @Singleton
+    @Provides
+    fun provideArticleAdapter(): ArticleAdapter {
+        return ArticleAdapter()
     }
 
     companion object {

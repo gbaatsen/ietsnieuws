@@ -5,25 +5,27 @@ import android.arch.lifecycle.ViewModel
 import com.baatsen.ietsnieuws.SingleLiveEvent
 import com.baatsen.ietsnieuws.domain.interactor.GetNewsInteractor
 import com.baatsen.ietsnieuws.domain.model.Article
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.baatsen.ietsnieuws.utils.SchedulerProvider
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class ArticleListViewModel @Inject constructor(
-    private val getNewsInteractor: GetNewsInteractor) : ViewModel(),
+    private val scheduler: SchedulerProvider,
+    @Suppress("MemberVisibilityCanBePrivate") val articleAdapter: ArticleAdapter, //must be public for databinding
+    private val getNewsInteractor: GetNewsInteractor
+) : ViewModel(),
     ArticleAdapter.ClickListener {
 
     val isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val urlToOpen = SingleLiveEvent<String>()
     val isInErrorState: MutableLiveData<Boolean> = MutableLiveData()
     val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
-    val articleAdapter = ArticleAdapter(this)
 
 
     private lateinit var subscription: Disposable
 
     init {
+        articleAdapter.clickListener = this
         loadArticles()
     }
 
@@ -39,8 +41,8 @@ class ArticleListViewModel @Inject constructor(
 
     fun loadArticles() {
         subscription = getNewsInteractor.execute()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(scheduler.io())
+            .observeOn(scheduler.ui())
             .doOnSubscribe { onStartLoading() }
             .subscribe(
                 { result -> onNewsReceived(result) },

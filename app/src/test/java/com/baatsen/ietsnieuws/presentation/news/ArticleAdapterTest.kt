@@ -34,7 +34,7 @@ class ArticleAdapterTest {
 
     @Before
     fun setup() {
-        adapter = ArticleAdapter(clickListener)
+        adapter = ArticleAdapter()
     }
 
     @Test
