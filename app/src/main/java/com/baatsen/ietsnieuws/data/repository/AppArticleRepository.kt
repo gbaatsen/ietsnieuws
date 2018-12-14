@@ -21,7 +21,7 @@ constructor(
 ) : ArticleRepository {
 
     override fun getNews(): Single<List<Article>> {
-        var source = sharedPrefs.getString(SOURCE, DEFAULT)
+        val source = sharedPrefs.getString(SOURCE, DEFAULT)
         return newsService.getNews(KEY, source!!) //can force unwrap because of the default value
             .map { newsMapper.transform(it) }
             .singleOrError()
