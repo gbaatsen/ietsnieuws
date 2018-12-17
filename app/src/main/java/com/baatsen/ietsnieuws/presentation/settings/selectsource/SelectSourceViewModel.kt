@@ -76,4 +76,8 @@ class SelectSourceViewModel @Inject constructor(
         sourceSelected.call()
     }
 
+    fun filter(orEmpty: String) {
+        println("gilles: $orEmpty")
+    }
+
 }

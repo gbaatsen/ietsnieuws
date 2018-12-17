@@ -7,4 +7,5 @@
     <string name="change_source">Andere nieuwsbron</string>
     <string name="change_source_subtitle">Selecteer een andere nieuwsbron</string>
     <string name="select_source">Kies nieuwsbron</string>
+    <string name="search">Zoek</string>
 </resources>
