@@ -6,6 +6,8 @@ import com.baatsen.ietsnieuws.SingleLiveEvent
 import com.baatsen.ietsnieuws.domain.interactor.GetNewsInteractor
 import com.baatsen.ietsnieuws.domain.model.Article
 import com.baatsen.ietsnieuws.utils.SchedulerProvider
+import com.baatsen.ietsnieuws.viewmodel.State
+import com.baatsen.ietsnieuws.viewmodel.StatesViewModel
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
@@ -14,19 +16,18 @@ class ArticleListViewModel @Inject constructor(
     @Suppress("MemberVisibilityCanBePrivate") val articleAdapter: ArticleAdapter, //must be public for databinding
     private val getNewsInteractor: GetNewsInteractor
 ) : ViewModel(),
-    ArticleAdapter.ClickListener {
+    ArticleAdapter.ClickListener,
+    StatesViewModel {
 
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val state = MutableLiveData<State>()
+
     val urlToOpen = SingleLiveEvent<String>()
-    val isInErrorState: MutableLiveData<Boolean> = MutableLiveData()
-    val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
-
 
     private lateinit var subscription: Disposable
 
     init {
         articleAdapter.clickListener = this
-        loadArticles()
+        reload()
     }
 
     override fun onCleared() {
@@ -35,37 +36,24 @@ class ArticleListViewModel @Inject constructor(
     }
 
     fun refresh() {
-        isRefreshing.value = true
-        loadArticles()
+        reload()
     }
 
-    fun loadArticles() {
+    override fun reload() {
         subscription = getNewsInteractor.execute()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.ui())
-            .doOnSubscribe { onStartLoading() }
+            .doOnSubscribe { state.value = State.LOADING }
+            .doOnSuccess { state.value = State.READY }
             .subscribe(
                 { result -> onNewsReceived(result) },
-                { onError() }
+                { state.value = State.ERROR }
             )
     }
 
-    private fun onStartLoading() {
-        isLoading.value = true
-    }
-
     private fun onNewsReceived(articleList: List<Article>) {
-        isLoading.value = false
-        isInErrorState.value = false
-        isRefreshing.value = false
         articleAdapter.updateArticleList(articleList)
         articleAdapter.notifyDataSetChanged()
-    }
-
-    private fun onError() {
-        isLoading.value = false
-        isInErrorState.value = true
-        isRefreshing.value = false
     }
 
     override fun onClick(url: String?) {

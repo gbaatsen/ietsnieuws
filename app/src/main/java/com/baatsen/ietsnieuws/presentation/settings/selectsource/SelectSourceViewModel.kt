@@ -8,6 +8,8 @@ import com.baatsen.ietsnieuws.di.AppModule
 import com.baatsen.ietsnieuws.domain.interactor.GetSourcesInteractor
 import com.baatsen.ietsnieuws.domain.model.Source
 import com.baatsen.ietsnieuws.utils.SOURCE
+import com.baatsen.ietsnieuws.viewmodel.State
+import com.baatsen.ietsnieuws.viewmodel.StatesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -18,18 +20,16 @@ class SelectSourceViewModel @Inject constructor(
     private val getSourcesInteractor: GetSourcesInteractor,
     @Named(AppModule.SHARED_PREFERENCES) private val sharedPrefs: SharedPreferences
 ) : ViewModel(),
-    SourceAdapter.ClickListener {
+    SourceAdapter.ClickListener, StatesViewModel {
 
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val isInErrorState: MutableLiveData<Boolean> = MutableLiveData()
-    val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
+    override val state = MutableLiveData<State>()
     val sourceSelected: SingleLiveEvent<Void> = SingleLiveEvent()
     val sourceAdapter = SourceAdapter(this)
 
     private lateinit var subscription: Disposable
 
     init {
-        loadSources()
+        reload()
     }
 
     override fun onCleared() {
@@ -37,38 +37,21 @@ class SelectSourceViewModel @Inject constructor(
         subscription.dispose()
     }
 
-    fun loadSources() {
+    override fun reload() {
         subscription = getSourcesInteractor.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { onStartLoading() }
+            .doOnSubscribe { state.value = State.LOADING }
+            .doOnSuccess { state.value = State.READY }
             .subscribe(
                 { result -> onSourcesReceived(result) },
-                { onError() }
+                { state.value = State.ERROR }
             )
     }
 
-    fun refresh() {
-        isRefreshing.value = true
-        loadSources()
-    }
-
-    private fun onStartLoading() {
-        isLoading.value = true
-    }
-
     private fun onSourcesReceived(sourceList: List<Source>) {
-        isLoading.value = false
-        isInErrorState.value = false
-        isRefreshing.value = false
         sourceAdapter.updateSourceList(sourceList)
         sourceAdapter.notifyDataSetChanged()
-    }
-
-    private fun onError() {
-        isLoading.value = false
-        isInErrorState.value = true
-        isRefreshing.value = false
     }
 
     override fun onClick(id: String?) {
@@ -77,7 +60,7 @@ class SelectSourceViewModel @Inject constructor(
     }
 
     fun filter(orEmpty: String) {
-        println("gilles: $orEmpty")
+//todo
     }
 
 }
