@@ -11,6 +11,7 @@ import com.baatsen.ietsnieuws.domain.model.Source
 
 class SourceAdapter(private val clickListener: ClickListener) : RecyclerView.Adapter<SourceAdapter.ViewHolder>() {
     private lateinit var sourceList: List<Source>
+    private lateinit var completeList: List<Source>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: SourceItemBinding =
@@ -29,6 +30,13 @@ class SourceAdapter(private val clickListener: ClickListener) : RecyclerView.Ada
 
     fun updateSourceList(sourceList: List<Source>) {
         this.sourceList = sourceList
+        this.completeList = sourceList
+    }
+
+    fun setFilter(filter: String) {
+        sourceList = if (filter.isEmpty()) completeList else
+            sourceList.filter { it.name.contains(filter, true) }
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: SourceItemBinding) : RecyclerView.ViewHolder(binding.root) {

@@ -59,8 +59,8 @@ class SelectSourceViewModel @Inject constructor(
         sourceSelected.call()
     }
 
-    fun filter(orEmpty: String) {
-//todo
+    fun filter(filter: String) {
+        sourceAdapter.setFilter(filter)
     }
 
 }

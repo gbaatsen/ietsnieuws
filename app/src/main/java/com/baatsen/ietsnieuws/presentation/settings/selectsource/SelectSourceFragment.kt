@@ -64,10 +64,6 @@ class SelectSourceFragment : Fragment(), Injectable {
         })
     }
 
-    private fun gotoSearch() {
-
-    }
-
     private fun goBack() {
         requireFragmentManager().popBackStackImmediate()
     }
