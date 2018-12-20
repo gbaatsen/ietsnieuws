@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Iets nieuws</string>
     <string name="retry">Probeer opnieuw</string>
-    <string name="load_error">Er is een fout opgetreden bij het ophalen van het nieuws</string>
+    <string name="load_error">Er is een fout opgetreden bij het laden</string>
     <string name="settings">Instellingen</string>
     <string name="news_items">Nieuwsberichten</string>
     <string name="change_source">Andere nieuwsbron</string>

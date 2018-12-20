@@ -9,6 +9,7 @@
                 type="com.baatsen.ietsnieuws.presentation.news.ArticleListViewModel"/>
 
         <import type="com.baatsen.ietsnieuws.viewmodel.State"/>
+        <import type="android.support.v7.widget.LinearLayoutManager"/>
 
     </data>
 
@@ -29,6 +30,7 @@
 
             <android.support.v4.widget.SwipeRefreshLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
+                    app:isVisible="@{viewModel.state==State.READY}"
                     android:id="@+id/swipe_layout"
                     android:layout_width="match_parent"
                     app:refreshing="@{viewModel.state==State.REFRESHING}"
@@ -40,6 +42,8 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:adapter="@{viewModel.articleAdapter}"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:orientation="@{LinearLayoutManager.VERTICAL}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

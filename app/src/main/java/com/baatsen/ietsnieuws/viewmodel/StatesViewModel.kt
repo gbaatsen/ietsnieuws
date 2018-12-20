@@ -7,6 +7,5 @@ interface StatesViewModel {
 
     val state: MutableLiveData<State>
 
-    fun reload() {
-    }
+    fun reload()
 }

@@ -9,7 +9,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.baatsen.ietsnieuws.R
 import com.baatsen.ietsnieuws.databinding.FragmentArticlelistBinding
@@ -33,7 +32,6 @@ class ArticleListFragment : Fragment(), Injectable {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ArticleListViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_articlelist, container, false)
         binding.viewModel = viewModel
-        binding.recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         viewModel.urlToOpen.observe(this, Observer { url -> startBrowser(url) })
         binding.setLifecycleOwner(this)
         (activity as AppCompatActivity).let {

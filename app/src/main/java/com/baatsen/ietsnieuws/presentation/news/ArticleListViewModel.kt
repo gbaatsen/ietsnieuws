@@ -40,6 +40,7 @@ class ArticleListViewModel @Inject constructor(
     }
 
     override fun reload() {
+        println("gilles reload news")
         subscription = getNewsInteractor.execute()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.ui())
