@@ -2,8 +2,6 @@ package com.baatsen.ietsnieuws.presentation.settings.selectsource
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,19 +11,15 @@ import android.support.v7.widget.SearchView
 import android.view.*
 import com.baatsen.ietsnieuws.R
 import com.baatsen.ietsnieuws.databinding.FragmentSelectSourceBinding
-import com.baatsen.ietsnieuws.di.Injectable
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class SelectSourceFragment : Fragment(), Injectable {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+class SelectSourceFragment : Fragment() {
 
     lateinit var binding: FragmentSelectSourceBinding
-    lateinit var viewModel: SelectSourceViewModel
+    val viewModel: SelectSourceViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SelectSourceViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_source, container, false)
         binding.viewModel = viewModel
         viewModel.sourceSelected.observe(this, Observer { closeSettings() })
@@ -33,7 +27,7 @@ class SelectSourceFragment : Fragment(), Injectable {
         binding.setLifecycleOwner(this)
         (activity as AppCompatActivity).let {
             it.setSupportActionBar(binding.toolbar.toolbar)
-            it.supportActionBar?.setDisplayHomeAsUpEnabled(true);
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
         binding.toolbar.toolbar.let {
             it.setNavigationOnClickListener { _ -> goBack() }

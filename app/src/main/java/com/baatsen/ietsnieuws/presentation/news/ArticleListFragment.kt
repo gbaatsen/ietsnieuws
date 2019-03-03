@@ -2,8 +2,6 @@ package com.baatsen.ietsnieuws.presentation.news
 
 import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -12,31 +10,26 @@ import android.support.v7.app.AppCompatActivity
 import android.view.*
 import com.baatsen.ietsnieuws.R
 import com.baatsen.ietsnieuws.databinding.FragmentArticlelistBinding
-import com.baatsen.ietsnieuws.di.Injectable
 import com.baatsen.ietsnieuws.presentation.settings.SettingsActivity
 import org.jetbrains.anko.support.v4.browse
 import org.jetbrains.anko.support.v4.intentFor
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class ArticleListFragment : Fragment(), Injectable {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+class ArticleListFragment : Fragment() {
+    val viewModel: ArticleListViewModel by viewModel()
 
     lateinit var binding: FragmentArticlelistBinding
-    lateinit var viewModel: ArticleListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ArticleListViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_articlelist, container, false)
         binding.viewModel = viewModel
         viewModel.urlToOpen.observe(this, Observer { url -> startBrowser(url) })
         binding.setLifecycleOwner(this)
         (activity as AppCompatActivity).let {
             it.setSupportActionBar(binding.toolbar.toolbar)
-            it.supportActionBar?.setDisplayHomeAsUpEnabled(true);
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             it.supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
         }
         binding.toolbar.toolbar.let {

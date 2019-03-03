@@ -1,9 +1,8 @@
 package com.baatsen.ietsnieuws.data.model
 
 import com.baatsen.ietsnieuws.domain.model.Article
-import javax.inject.Inject
 
-class NewsMapper @Inject constructor() {
+class NewsMapper {
     fun transform(newsJson: NewsJson): List<Article> {
 
         return newsJson.articles.map {

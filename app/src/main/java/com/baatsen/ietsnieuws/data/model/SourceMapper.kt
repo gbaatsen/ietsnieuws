@@ -2,9 +2,8 @@ package com.baatsen.ietsnieuws.data.model
 
 import com.baatsen.ietsnieuws.R
 import com.baatsen.ietsnieuws.domain.model.Source
-import javax.inject.Inject
 
-class SourceMapper @Inject constructor() {
+class SourceMapper {
     fun transform(sourcesJson: SourcesJson): List<Source> {
 
         return sourcesJson.sources.map {

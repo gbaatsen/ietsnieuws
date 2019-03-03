@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.SharedPreferences
 import com.baatsen.ietsnieuws.SingleLiveEvent
-import com.baatsen.ietsnieuws.di.AppModule
 import com.baatsen.ietsnieuws.domain.interactor.GetSourcesInteractor
 import com.baatsen.ietsnieuws.domain.model.Source
 import com.baatsen.ietsnieuws.utils.SOURCE
@@ -13,12 +12,10 @@ import com.baatsen.ietsnieuws.viewmodel.StatesViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
-import javax.inject.Named
 
-class SelectSourceViewModel @Inject constructor(
+class SelectSourceViewModel(
     private val getSourcesInteractor: GetSourcesInteractor,
-    @Named(AppModule.SHARED_PREFERENCES) private val sharedPrefs: SharedPreferences
+    private val sharedPrefs: SharedPreferences
 ) : ViewModel(),
     SourceAdapter.ClickListener, StatesViewModel {
 

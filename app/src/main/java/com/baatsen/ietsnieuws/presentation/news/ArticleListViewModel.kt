@@ -9,11 +9,9 @@ import com.baatsen.ietsnieuws.utils.SchedulerProvider
 import com.baatsen.ietsnieuws.viewmodel.State
 import com.baatsen.ietsnieuws.viewmodel.StatesViewModel
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
-class ArticleListViewModel @Inject constructor(
-    private val scheduler: SchedulerProvider,
-    @Suppress("MemberVisibilityCanBePrivate") val articleAdapter: ArticleAdapter, //must be public for databinding
+class ArticleListViewModel(
+    private val scheduler: SchedulerProvider, val articleAdapter: ArticleAdapter,
     private val getNewsInteractor: GetNewsInteractor
 ) : ViewModel(),
     ArticleAdapter.ClickListener,

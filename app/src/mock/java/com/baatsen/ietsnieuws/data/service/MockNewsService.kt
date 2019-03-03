@@ -1,12 +1,9 @@
-package com.baatsen.ietsnieuws.data.service
-
 import com.baatsen.ietsnieuws.data.model.NewsJson
 import com.baatsen.ietsnieuws.data.model.SourcesJson
 import com.google.gson.Gson
 import io.reactivex.Single
-import javax.inject.Inject
 
-class MockNewsService @Inject constructor() {
+class MockNewsService() {
 
     fun getNews() = Single.just(Gson().fromJson(newsJson, NewsJson::class.java))
     fun getSources() = Single.just(Gson().fromJson(sourcesJson, SourcesJson::class.java))

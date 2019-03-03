@@ -1,21 +1,14 @@
 package com.baatsen.ietsnieuws
 
-import android.app.Activity
 import android.app.Application
-import com.baatsen.ietsnieuws.di.AppInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import com.baatsen.ietsnieuws.di.appModule
+import org.koin.android.ext.android.startKoin
 
 
-class IetsNieuwsApp : Application(), HasActivityInjector {
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-
+class IetsNieuwsApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        AppInjector.init(this)
+        // Start Koin
+        startKoin(this, listOf(appModule))
     }
-
-    override fun activityInjector() = dispatchingAndroidInjector
 }
